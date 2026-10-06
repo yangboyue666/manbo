@@ -24,4 +24,5 @@
     <string name="stop">停止</string>
     <string name="loading">加载中…</string>
     <string name="nickname_prompt">请先在设置页填写昵称</string>
+    <string name="desktop_mode">伪装电脑版</string>
 </resources>
