@@ -13,6 +13,7 @@ public class SettingsStore {
     private static final String KEY_HOME = "home_url";
     private static final String KEY_ADBLOCK = "adblock_enabled";
     private static final String KEY_ADDR_BOTTOM = "addr_bar_bottom";
+    private static final String KEY_DESKTOP = "desktop_mode";
     private final SharedPreferences sp;
 
     public SettingsStore(Context ctx) {
@@ -53,4 +54,7 @@ public class SettingsStore {
 
     public boolean isAddressBarBottom() { return sp.getBoolean(KEY_ADDR_BOTTOM, false); }
     public void setAddressBarBottom(boolean b) { sp.edit().putBoolean(KEY_ADDR_BOTTOM, b).apply(); }
+
+    public boolean isDesktopMode() { return sp.getBoolean(KEY_DESKTOP, false); }
+    public void setDesktopMode(boolean d) { sp.edit().putBoolean(KEY_DESKTOP, d).apply(); }
 }
