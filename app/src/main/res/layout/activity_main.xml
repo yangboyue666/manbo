@@ -1,44 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/bg">
 
     <LinearLayout
+        android:id="@+id/address_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/primary"
-        android:padding="4dp">
+        android:gravity="center_vertical"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
-        <EditText
-            android:id="@+id/url_bar"
+        <ImageButton
+            android:id="@+id/btn_back"
+            style="@style/GlassIconButton"
+            android:src="@drawable/ic_back"
+            android:contentDescription="@string/back" />
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
             android:layout_weight="1"
-            android:hint="@string/hint_url"
-            android:inputType="textUri"
-            android:imeOptions="actionGo"
-            android:singleLine="true"
-            android:background="@color/white"
-            android:padding="8dp"
-            android:textSize="14sp" />
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_url_bar"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
 
-        <Button
-            android:id="@+id/btn_go"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="→"
-            android:textColor="@color/white"
-            android:background="?android:attr/selectableItemBackground" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_search"
+                android:tint="@color/text_secondary"
+                android:contentDescription="@null" />
+
+            <EditText
+                android:id="@+id/url_bar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:hint="@string/hint_url"
+                android:textSize="15sp"
+                android:textColor="@color/text"
+                android:textColorHint="@color/text_secondary"
+                android:background="@null"
+                android:singleLine="true"
+                android:imeOptions="actionGo"
+                android:inputType="textUri"
+                android:importantForAutofill="no" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_menu"
+            style="@style/GlassIconButton"
+            android:src="@drawable/ic_more"
+            android:contentDescription="@string/settings" />
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:max="100" />
+        android:layout_height="2dp"
+        android:max="100"
+        android:progressTint="@color/primary" />
 
     <WebView
         android:id="@+id/webview"
@@ -47,45 +80,45 @@
         android:layout_weight="1" />
 
     <LinearLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/bg_dark"
-        android:padding="4dp">
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_bottom_bar"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
-        <Button
-            android:id="@+id/btn_back"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="◀" />
-
-        <Button
+        <ImageButton
             android:id="@+id/btn_forward"
+            style="@style/GlassIconButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="▶" />
+            android:src="@drawable/ic_forward"
+            android:contentDescription="@string/forward" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_refresh"
+            style="@style/GlassIconButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="↻" />
+            android:src="@drawable/ic_refresh"
+            android:contentDescription="@string/refresh" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_home"
+            style="@style/GlassIconButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="⌂" />
+            android:src="@drawable/ic_home"
+            android:contentDescription="@string/home" />
 
-        <Button
-            android:id="@+id/btn_menu"
+        <ImageButton
+            android:id="@+id/btn_star"
+            style="@style/GlassIconButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="≡" />
+            android:src="@drawable/ic_star"
+            android:contentDescription="@string/add_bookmark" />
     </LinearLayout>
 </LinearLayout>
