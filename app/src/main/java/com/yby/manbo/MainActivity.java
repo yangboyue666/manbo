@@ -27,12 +27,14 @@ public class MainActivity extends Activity {
     private EditText urlBar;
     private ProgressBar progress;
     private SettingsStore settings;
+    private AdBlockEngine adBlock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         settings = new SettingsStore(this);
+        adBlock = new AdBlockEngine();
 
         urlBar = findViewById(R.id.url_bar);
         progress = findViewById(R.id.progress);
@@ -80,6 +82,14 @@ public class MainActivity extends Activity {
                 return false;
             }
             @Override
+            public android.webkit.WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                if (settings.isAdBlockEnabled() && adBlock.isBlocked(request.getUrl().toString())) {
+                    return new android.webkit.WebResourceResponse("text/plain", "utf-8",
+                            new java.io.ByteArrayInputStream(new byte[0]));
+                }
+                return null;
+            }
+            @Override
             public void onPageFinished(WebView view, String url) {
                 urlBar.setText(url);
             }
@@ -106,6 +116,7 @@ public class MainActivity extends Activity {
                     String name = URLUtil.guessFileName(url, contentDisposition, mimetype);
                     req.setDestinationInExternalPublicDir(android.os.Environment.DIRECTORY_DOWNLOADS, name);
                     dm.enqueue(req);
+                    new DownloadRecord(MainActivity.this).add(name, url);
                     Toast.makeText(MainActivity.this, "开始下载: " + name, Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this, "下载失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -125,16 +136,26 @@ public class MainActivity extends Activity {
     }
 
     private void showMenu() {
-        String[] items = {"书签", "聊天", "设置", "添加当前页为书签"};
+        String[] items = {"书签", "聊天", "隐私窗口", "下载历史", "密码库", "设置", "添加当前页为书签"};
         new AlertDialog.Builder(this)
             .setItems(items, (d, which) -> {
                 switch (which) {
                     case 0: startActivity(new Intent(this, BookmarkActivity.class)); break;
                     case 1: startActivity(new Intent(this, ChatActivity.class)); break;
-                    case 2: startActivity(new Intent(this, SettingsActivity.class)); break;
-                    case 3: addBookmark(); break;
+                    case 2: openPrivate(); break;
+                    case 3: startActivity(new Intent(this, DownloadHistoryActivity.class)); break;
+                    case 4: startActivity(new Intent(this, PasswordActivity.class)); break;
+                    case 5: startActivity(new Intent(this, SettingsActivity.class)); break;
+                    case 6: addBookmark(); break;
                 }
             }).show();
+    }
+
+    private void openPrivate() {
+        Intent intent = new Intent(this, PrivateActivity.class);
+        String url = webView.getUrl();
+        if (url != null) intent.setData(android.net.Uri.parse(url));
+        startActivity(intent);
     }
 
     private void addBookmark() {

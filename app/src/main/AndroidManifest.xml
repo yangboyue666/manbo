@@ -48,5 +48,22 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
+        <activity
+            android:name=".PrivateActivity"
+            android:exported="false"
+            android:process=":private"
+            android:excludeFromRecents="true"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
+        <activity
+            android:name=".DownloadHistoryActivity"
+            android:exported="false"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
+        <activity
+            android:name=".PasswordActivity"
+            android:exported="false"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
     </application>
 </manifest>

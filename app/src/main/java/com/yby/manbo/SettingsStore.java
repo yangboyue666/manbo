@@ -11,6 +11,7 @@ public class SettingsStore {
     private static final String KEY_SUPA_KEY = "supabase_key";
     private static final String KEY_CLIENT_ID = "client_id";
     private static final String KEY_HOME = "home_url";
+    private static final String KEY_ADBLOCK = "adblock_enabled";
     private final SharedPreferences sp;
 
     public SettingsStore(Context ctx) {
@@ -45,4 +46,7 @@ public class SettingsStore {
         String u = getBackendUrl();
         return u != null && !u.trim().isEmpty();
     }
+
+    public boolean isAdBlockEnabled() { return sp.getBoolean(KEY_ADBLOCK, true); }
+    public void setAdBlockEnabled(boolean e) { sp.edit().putBoolean(KEY_ADBLOCK, e).apply(); }
 }
