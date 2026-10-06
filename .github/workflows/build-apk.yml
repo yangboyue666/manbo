@@ -33,7 +33,7 @@ jobs:
       - name: Create release with APK
         uses: softprops/action-gh-release@v2
         with:
-          tag: v1.0.0-debug
+          tag_name: v1.0.0-debug
           name: 曼波 v1.0.0 (debug)
           body: |
             曼波浏览器 debug 版本。
