@@ -48,10 +48,10 @@ public class MessageAdapter extends BaseAdapter {
         time.setText(m.time != null ? m.time : "");
         boolean self = m.nickname != null && m.nickname.equals(selfNick);
         if (self) {
-            content.setBackgroundColor(ctx.getResources().getColor(R.color.bubble_self));
+            content.setBackgroundResource(R.drawable.bg_bubble_self);
             content.setTextColor(ctx.getResources().getColor(R.color.white));
         } else {
-            content.setBackgroundColor(ctx.getResources().getColor(R.color.bubble_other));
+            content.setBackgroundResource(R.drawable.bg_bubble_other);
             content.setTextColor(ctx.getResources().getColor(R.color.text));
         }
         return convertView;
