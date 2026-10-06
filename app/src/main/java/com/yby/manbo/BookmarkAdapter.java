@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class BookmarkAdapter extends BaseAdapter {
         BookmarkManager.Bookmark b = list.get(i);
         ((TextView) convertView.findViewById(R.id.bm_title)).setText(b.title);
         ((TextView) convertView.findViewById(R.id.bm_url)).setText(b.url);
-        Button del = convertView.findViewById(R.id.bm_delete);
+        View del = convertView.findViewById(R.id.bm_delete);
         del.setOnClickListener(v -> { if (listener != null) listener.onDelete(i); });
         return convertView;
     }
