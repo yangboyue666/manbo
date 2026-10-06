@@ -1,0 +1,13 @@
+<resources>
+    <color name="primary">#00897B</color>
+    <color name="primary_dark">#00695C</color>
+    <color name="accent">#FF6F00</color>
+    <color name="bg">#FFFFFF</color>
+    <color name="bg_dark">#FAFAFA</color>
+    <color name="text">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="bubble_self">#00897B</color>
+    <color name="bubble_other">#EEEEEE</color>
+    <color name="white">#FFFFFF</color>
+</resources>

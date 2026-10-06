@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">曼波</string>
+    <string name="chat">聊天</string>
+    <string name="bookmarks">书签</string>
+    <string name="settings">设置</string>
+    <string name="hint_url">输入网址或搜索</string>
+    <string name="hint_nickname">昵称</string>
+    <string name="hint_message">说点什么…</string>
+    <string name="send">发送</string>
+    <string name="add_bookmark">添加书签</string>
+    <string name="open_bookmark">打开书签</string>
+    <string name="delete">删除</string>
+    <string name="backend_url">聊天后端地址</string>
+    <string name="backend_url_hint">https://your-server.com</string>
+    <string name="chat_mode">聊天后端类型</string>
+    <string name="save">保存</string>
+    <string name="no_bookmarks">还没有书签，点菜单添加</string>
+    <string name="not_configured">聊天后端未配置，请到设置页填写地址</string>
+    <string name="go_settings">去设置</string>
+    <string name="back">后退</string>
+    <string name="forward">前进</string>
+    <string name="refresh">刷新</string>
+    <string name="home">主页</string>
+    <string name="stop">停止</string>
+    <string name="loading">加载中…</string>
+    <string name="nickname_prompt">请先在设置页填写昵称</string>
+</resources>

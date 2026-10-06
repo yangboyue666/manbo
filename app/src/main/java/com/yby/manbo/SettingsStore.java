@@ -1,0 +1,48 @@
+package com.yby.manbo;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+public class SettingsStore {
+    private static final String PREFS = "manbo_settings";
+    private static final String KEY_BACKEND_URL = "backend_url";
+    private static final String KEY_NICKNAME = "nickname";
+    private static final String KEY_MODE = "chat_mode";
+    private static final String KEY_SUPA_KEY = "supabase_key";
+    private static final String KEY_CLIENT_ID = "client_id";
+    private static final String KEY_HOME = "home_url";
+    private final SharedPreferences sp;
+
+    public SettingsStore(Context ctx) {
+        sp = ctx.getApplicationContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+    }
+
+    public String getBackendUrl() { return sp.getString(KEY_BACKEND_URL, ""); }
+    public void setBackendUrl(String url) { sp.edit().putString(KEY_BACKEND_URL, url).apply(); }
+
+    public String getNickname() { return sp.getString(KEY_NICKNAME, ""); }
+    public void setNickname(String n) { sp.edit().putString(KEY_NICKNAME, n).apply(); }
+
+    public int getMode() { return sp.getInt(KEY_MODE, 0); }
+    public void setMode(int m) { sp.edit().putInt(KEY_MODE, m).apply(); }
+
+    public String getSupabaseKey() { return sp.getString(KEY_SUPA_KEY, ""); }
+    public void setSupabaseKey(String k) { sp.edit().putString(KEY_SUPA_KEY, k).apply(); }
+
+    public String getClientId() {
+        String id = sp.getString(KEY_CLIENT_ID, null);
+        if (id == null) {
+            id = "m" + System.currentTimeMillis() + (int)(Math.random()*10000);
+            sp.edit().putString(KEY_CLIENT_ID, id).apply();
+        }
+        return id;
+    }
+
+    public String getHomeUrl() { return sp.getString(KEY_HOME, "https://www.bing.com"); }
+    public void setHomeUrl(String u) { sp.edit().putString(KEY_HOME, u).apply(); }
+
+    public boolean isConfigured() {
+        String u = getBackendUrl();
+        return u != null && !u.trim().isEmpty();
+    }
+}
