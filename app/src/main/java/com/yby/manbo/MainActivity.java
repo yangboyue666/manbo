@@ -17,8 +17,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -42,7 +42,6 @@ public class MainActivity extends Activity {
 
         setupWebView();
 
-        findViewById(R.id.btn_go).setOnClickListener(v -> go());
         urlBar.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_GO) { go(); return true; }
             return false;
@@ -52,11 +51,27 @@ public class MainActivity extends Activity {
         findViewById(R.id.btn_forward).setOnClickListener(v -> { if (webView.canGoForward()) webView.goForward(); });
         findViewById(R.id.btn_refresh).setOnClickListener(v -> webView.reload());
         findViewById(R.id.btn_home).setOnClickListener(v -> webView.loadUrl(settings.getHomeUrl()));
+        findViewById(R.id.btn_star).setOnClickListener(v -> addBookmark());
         findViewById(R.id.btn_menu).setOnClickListener(v -> showMenu());
+
+        applyAddressBarPosition();
 
         String intentUrl = getIntent().getDataString();
         if (intentUrl != null) webView.loadUrl(intentUrl);
         else webView.loadUrl(settings.getHomeUrl());
+    }
+
+    private void applyAddressBarPosition() {
+        LinearLayout root = findViewById(R.id.root);
+        View addressBar = findViewById(R.id.address_bar);
+        View toolbar = findViewById(R.id.toolbar);
+        root.removeView(addressBar);
+        if (settings.isAddressBarBottom()) {
+            int idx = root.indexOfChild(toolbar);
+            root.addView(addressBar, idx);
+        } else {
+            root.addView(addressBar, 0);
+        }
     }
 
     private void setupWebView() {
@@ -154,7 +169,7 @@ public class MainActivity extends Activity {
     private void openPrivate() {
         Intent intent = new Intent(this, PrivateActivity.class);
         String url = webView.getUrl();
-        if (url != null) intent.setData(android.net.Uri.parse(url));
+        if (url != null) intent.setData(Uri.parse(url));
         startActivity(intent);
     }
 
