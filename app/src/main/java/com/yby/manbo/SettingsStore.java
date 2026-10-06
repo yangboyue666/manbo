@@ -12,6 +12,7 @@ public class SettingsStore {
     private static final String KEY_CLIENT_ID = "client_id";
     private static final String KEY_HOME = "home_url";
     private static final String KEY_ADBLOCK = "adblock_enabled";
+    private static final String KEY_ADDR_BOTTOM = "addr_bar_bottom";
     private final SharedPreferences sp;
 
     public SettingsStore(Context ctx) {
@@ -49,4 +50,7 @@ public class SettingsStore {
 
     public boolean isAdBlockEnabled() { return sp.getBoolean(KEY_ADBLOCK, true); }
     public void setAdBlockEnabled(boolean e) { sp.edit().putBoolean(KEY_ADBLOCK, e).apply(); }
+
+    public boolean isAddressBarBottom() { return sp.getBoolean(KEY_ADDR_BOTTOM, false); }
+    public void setAddressBarBottom(boolean b) { sp.edit().putBoolean(KEY_ADDR_BOTTOM, b).apply(); }
 }
