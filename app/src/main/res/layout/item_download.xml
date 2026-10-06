@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:background="@color/white"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp">
 
     <TextView
         android:id="@+id/dl_name"
@@ -19,5 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:textColor="@color/text_secondary" />
+        android:textColor="@color/text_secondary"
+        android:layout_marginTop="2dp" />
 </LinearLayout>
