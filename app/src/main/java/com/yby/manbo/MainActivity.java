@@ -74,6 +74,23 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void applyUserAgent() {
+        WebSettings ws = webView.getSettings();
+        if (settings.isDesktopMode()) {
+            ws.setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36");
+        } else {
+            ws.setUserAgentString(null);
+        }
+    }
+
+    private void toggleDesktopMode() {
+        boolean now = !settings.isDesktopMode();
+        settings.setDesktopMode(now);
+        applyUserAgent();
+        webView.reload();
+        Toast.makeText(this, now ? "已切换为电脑版" : "已切换为手机版", Toast.LENGTH_SHORT).show();
+    }
+
     private void setupWebView() {
         WebSettings ws = webView.getSettings();
         ws.setJavaScriptEnabled(true);
@@ -86,7 +103,7 @@ public class MainActivity extends Activity {
         ws.setUseWideViewPort(true);
         ws.setAllowFileAccess(true);
         ws.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
-        ws.setUserAgentString(ws.getUserAgentString() + " Manbo/1.0");
+        applyUserAgent();
 
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
@@ -151,7 +168,8 @@ public class MainActivity extends Activity {
     }
 
     private void showMenu() {
-        String[] items = {"书签", "聊天", "隐私窗口", "下载历史", "密码库", "设置", "添加当前页为书签"};
+        String desktopLabel = settings.isDesktopMode() ? "伪装电脑版 (已开启)" : "伪装电脑版";
+        String[] items = {"书签", "聊天", "隐私窗口", "下载历史", "密码库", desktopLabel, "设置", "添加当前页为书签"};
         new AlertDialog.Builder(this)
             .setItems(items, (d, which) -> {
                 switch (which) {
@@ -160,8 +178,9 @@ public class MainActivity extends Activity {
                     case 2: openPrivate(); break;
                     case 3: startActivity(new Intent(this, DownloadHistoryActivity.class)); break;
                     case 4: startActivity(new Intent(this, PasswordActivity.class)); break;
-                    case 5: startActivity(new Intent(this, SettingsActivity.class)); break;
-                    case 6: addBookmark(); break;
+                    case 5: toggleDesktopMode(); break;
+                    case 6: startActivity(new Intent(this, SettingsActivity.class)); break;
+                    case 7: addBookmark(); break;
                 }
             }).show();
     }
