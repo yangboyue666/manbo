@@ -108,6 +108,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="广告拦截"
+            android:layout_marginBottom="12dp" />
+
+        <CheckBox
+            android:id="@+id/cb_desktop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/desktop_mode"
             android:layout_marginBottom="24dp" />
 
         <Button
