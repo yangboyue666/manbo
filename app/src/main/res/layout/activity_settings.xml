@@ -73,6 +73,36 @@
             android:singleLine="true"
             android:layout_marginBottom="24dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址栏位置"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <RadioGroup
+            android:id="@+id/addr_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/addr_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="顶部"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/addr_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="底部"
+                android:layout_marginStart="24dp" />
+        </RadioGroup>
+
         <CheckBox
             android:id="@+id/cb_adblock"
             android:layout_width="wrap_content"
@@ -82,10 +112,9 @@
 
         <Button
             android:id="@+id/btn_save"
+            style="@style/PrimaryButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:background="@color/primary"
-            android:textColor="@color/white" />
+            android:layout_height="52dp"
+            android:text="@string/save" />
     </LinearLayout>
 </ScrollView>
