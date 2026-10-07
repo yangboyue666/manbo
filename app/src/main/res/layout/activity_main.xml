@@ -213,7 +213,7 @@
                         android:layout_height="60dp"
                         android:padding="16dp"
                         android:src="@drawable/ic_bookmark"
-                        android:tint="@color/primary"
+                        android:tint="#3B82F6"
                         android:background="@drawable/bg_home_icon"
                         android:elevation="2dp"
                         android:contentDescription="@string/bookmarks" />
@@ -241,7 +241,7 @@
                         android:layout_height="60dp"
                         android:padding="16dp"
                         android:src="@drawable/ic_chat"
-                        android:tint="@color/primary"
+                        android:tint="#22C55E"
                         android:background="@drawable/bg_home_icon"
                         android:elevation="2dp"
                         android:contentDescription="@string/chat" />
@@ -269,7 +269,7 @@
                         android:layout_height="60dp"
                         android:padding="16dp"
                         android:src="@drawable/ic_download"
-                        android:tint="@color/primary"
+                        android:tint="#F59E0B"
                         android:background="@drawable/bg_home_icon"
                         android:elevation="2dp"
                         android:contentDescription="@string/download" />
@@ -304,7 +304,7 @@
                         android:layout_height="60dp"
                         android:padding="16dp"
                         android:src="@drawable/ic_lock"
-                        android:tint="@color/primary"
+                        android:tint="#8B5CF6"
                         android:background="@drawable/bg_home_icon"
                         android:elevation="2dp"
                         android:contentDescription="@string/password_vault" />
@@ -332,7 +332,7 @@
                         android:layout_height="60dp"
                         android:padding="16dp"
                         android:src="@drawable/ic_shield"
-                        android:tint="@color/primary"
+                        android:tint="#EF4444"
                         android:background="@drawable/bg_home_icon"
                         android:elevation="2dp"
                         android:contentDescription="@string/private_mode" />
@@ -360,7 +360,7 @@
                         android:layout_height="60dp"
                         android:padding="16dp"
                         android:src="@drawable/ic_settings"
-                        android:tint="@color/primary"
+                        android:tint="#64748B"
                         android:background="@drawable/bg_home_icon"
                         android:elevation="2dp"
                         android:contentDescription="@string/settings" />
