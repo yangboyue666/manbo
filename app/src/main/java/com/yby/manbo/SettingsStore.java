@@ -15,6 +15,7 @@ public class SettingsStore {
     private static final String KEY_ADDR_BOTTOM = "addr_bar_bottom";
     private static final String KEY_DESKTOP = "desktop_mode";
     private static final String KEY_HOME_TITLE = "home_title";
+    private static final String KEY_LAST_APK_SIZE = "last_apk_size";
     private final SharedPreferences sp;
 
     public SettingsStore(Context ctx) {
@@ -61,4 +62,7 @@ public class SettingsStore {
 
     public String getHomeTitle() { return sp.getString(KEY_HOME_TITLE, "manbo"); }
     public void setHomeTitle(String t) { sp.edit().putString(KEY_HOME_TITLE, t).apply(); }
+
+    public long getLastApkSize() { return sp.getLong(KEY_LAST_APK_SIZE, 0); }
+    public void setLastApkSize(long s) { sp.edit().putLong(KEY_LAST_APK_SIZE, s).apply(); }
 }
