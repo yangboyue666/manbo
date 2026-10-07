@@ -168,6 +168,11 @@ public class MainActivity extends Activity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest req) {
+                String u = req.getUrl().toString();
+                if (!u.startsWith("http://") && !u.startsWith("https://")) {
+                    try { startActivity(new Intent(Intent.ACTION_VIEW, req.getUrl())); } catch (Exception ignore) {}
+                    return true;
+                }
                 return false;
             }
             @Override
