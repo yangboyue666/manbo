@@ -14,6 +14,7 @@ public class SettingsStore {
     private static final String KEY_ADBLOCK = "adblock_enabled";
     private static final String KEY_ADDR_BOTTOM = "addr_bar_bottom";
     private static final String KEY_DESKTOP = "desktop_mode";
+    private static final String KEY_HOME_TITLE = "home_title";
     private final SharedPreferences sp;
 
     public SettingsStore(Context ctx) {
@@ -57,4 +58,7 @@ public class SettingsStore {
 
     public boolean isDesktopMode() { return sp.getBoolean(KEY_DESKTOP, false); }
     public void setDesktopMode(boolean d) { sp.edit().putBoolean(KEY_DESKTOP, d).apply(); }
+
+    public String getHomeTitle() { return sp.getString(KEY_HOME_TITLE, "曼波"); }
+    public void setHomeTitle(String t) { sp.edit().putString(KEY_HOME_TITLE, t).apply(); }
 }
