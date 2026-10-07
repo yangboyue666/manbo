@@ -14,14 +14,25 @@ android {
         versionName '1.0.0'
     }
 
+    signingConfigs {
+        release {
+            storeFile file(System.getenv('KEYSTORE_PATH') ?: 'nokeystore.jks')
+            storePassword System.getenv('KEYSTORE_PASS') ?: 'manbo2026'
+            keyAlias System.getenv('KEY_ALIAS') ?: 'manbo'
+            keyPassword System.getenv('KEY_PASS') ?: 'manbo2026'
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
             versionNameSuffix '-debug'
+            signingConfig signingConfigs.release
         }
         release {
             minifyEnabled true
             shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
