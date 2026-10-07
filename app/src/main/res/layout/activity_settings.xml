@@ -1,127 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:background="@color/bg">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_top_bar"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/chat_mode"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            android:text="@string/settings"
+            android:textColor="@color/text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-        <RadioGroup
-            android:id="@+id/mode_group"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="16dp">
+            android:padding="16dp">
 
-            <RadioButton
-                android:id="@+id/mode_php"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PHP 轮询 (send.php/get.php)"
-                android:checked="true" />
+                android:text="@string/chat_mode"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp" />
 
-            <RadioButton
-                android:id="@+id/mode_supabase"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp">
+
+                <RadioGroup
+                    android:id="@+id/mode_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <RadioButton
+                        android:id="@+id/mode_php"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PHP 轮询 (send.php/get.php)"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/mode_supabase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Supabase REST" />
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/edit_backend_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/backend_url_hint"
+                    android:textSize="14sp"
+                    android:inputType="textUri"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Supabase REST" />
-        </RadioGroup>
+                android:text="@string/hint_nickname"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/backend_url"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp">
 
-        <EditText
-            android:id="@+id/edit_backend_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/backend_url_hint"
-            android:inputType="textUri"
-            android:singleLine="true"
-            android:layout_marginBottom="16dp" />
+                <EditText
+                    android:id="@+id/edit_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_nickname"
+                    android:textSize="14sp"
+                    android:inputType="text"
+                    android:singleLine="true" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hint_nickname"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/edit_nickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_nickname"
-            android:inputType="text"
-            android:singleLine="true"
-            android:layout_marginBottom="24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="地址栏位置"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
-
-        <RadioGroup
-            android:id="@+id/addr_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <RadioButton
-                android:id="@+id/addr_top"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="顶部"
-                android:checked="true" />
+                android:text="@string/home_title"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp" />
 
-            <RadioButton
-                android:id="@+id/addr_bottom"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp">
+
+                <EditText
+                    android:id="@+id/edit_home_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/home_title"
+                    android:textSize="14sp"
+                    android:inputType="text"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="底部"
-                android:layout_marginStart="24dp" />
-        </RadioGroup>
+                android:text="外观与功能"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp" />
 
-        <CheckBox
-            android:id="@+id/cb_adblock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="广告拦截"
-            android:layout_marginBottom="12dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
 
-        <CheckBox
-            android:id="@+id/cb_desktop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/desktop_mode"
-            android:layout_marginBottom="24dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地址栏位置"
+                    android:textColor="@color/text"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="4dp" />
 
-        <Button
-            android:id="@+id/btn_save"
-            style="@style/PrimaryButton"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="@string/save" />
-    </LinearLayout>
-</ScrollView>
+                <RadioGroup
+                    android:id="@+id/addr_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <RadioButton
+                        android:id="@+id/addr_top"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="顶部"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/addr_bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="底部"
+                        android:layout_marginStart="24dp" />
+                </RadioGroup>
+
+                <CheckBox
+                    android:id="@+id/cb_adblock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="广告拦截" />
+
+                <CheckBox
+                    android:id="@+id/cb_desktop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/desktop_mode" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_save"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="@string/save" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
