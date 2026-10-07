@@ -200,6 +200,14 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_check_update"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="12dp"
+                android:text="检查更新" />
+
+            <Button
                 android:id="@+id/btn_save"
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
