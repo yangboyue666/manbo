@@ -72,6 +72,8 @@ public class MainActivity extends Activity {
 
         applyAddressBarPosition();
 
+        webView.loadUrl("about:blank");
+
         String intentUrl = getIntent().getDataString();
         if (intentUrl != null) { showBrowser(); webView.loadUrl(intentUrl); }
         else showHome();
@@ -178,7 +180,9 @@ public class MainActivity extends Activity {
             }
             @Override
             public void onPageFinished(WebView view, String url) {
-                urlBar.setText(url);
+                if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+                    urlBar.setText(url);
+                }
             }
         });
 
@@ -221,6 +225,12 @@ public class MainActivity extends Activity {
             w.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             w.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             w.setGravity(Gravity.BOTTOM);
+            if (android.os.Build.VERSION.SDK_INT >= 31) {
+                try {
+                    w.setBackgroundBlurRadius(50);
+                    w.setDimAmount(0.12f);
+                } catch (Exception ignore) {}
+            }
         }
         android.widget.TextView deskLabel = d.findViewById(R.id.menu_desktop_label);
         deskLabel.setText(settings.isDesktopMode() ? "电脑版已开" : "电脑版");
