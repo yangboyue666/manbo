@@ -1,6 +1,7 @@
 package com.yby.manbo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -51,6 +52,33 @@ public class SettingsActivity extends Activity {
             settings.setAddressBarBottom(addrGroup.getCheckedRadioButtonId() == R.id.addr_bottom);
             Toast.makeText(this, "已保存", Toast.LENGTH_SHORT).show();
             finish();
+        });
+
+        Button checkUpdate = findViewById(R.id.btn_check_update);
+        checkUpdate.setOnClickListener(v -> {
+            Toast.makeText(this, "正在检查...", Toast.LENGTH_SHORT).show();
+            UpdateChecker.check(new UpdateChecker.Callback() {
+                @Override public void onResult(boolean ok, String url, long size, String msg) {
+                    runOnUiThread(() -> {
+                        if (!ok) { Toast.makeText(SettingsActivity.this, "检查失败: " + msg, Toast.LENGTH_SHORT).show(); return; }
+                        long local = settings.getLastApkSize();
+                        if (local == 0 || size == local) {
+                            settings.setLastApkSize(size);
+                            Toast.makeText(SettingsActivity.this, "已是最新版本", Toast.LENGTH_SHORT).show();
+                        } else {
+                            new AlertDialog.Builder(SettingsActivity.this)
+                                .setTitle("发现新版本")
+                                .setMessage("新版本 " + size / 1024 + "KB，是否更新？")
+                                .setPositiveButton("更新", (d, w) -> {
+                                    Toast.makeText(SettingsActivity.this, "下载中...", Toast.LENGTH_SHORT).show();
+                                    UpdateChecker.downloadAndInstall(SettingsActivity.this, url);
+                                    settings.setLastApkSize(size);
+                                })
+                                .setNegativeButton("取消", null).show();
+                        }
+                    });
+                }
+            });
         });
     }
 }
