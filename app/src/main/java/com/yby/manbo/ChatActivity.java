@@ -20,6 +20,7 @@ public class ChatActivity extends Activity {
     private EditText msgInput;
     private Handler handler;
     private boolean polling = false;
+    private long lastSendTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class ChatActivity extends Activity {
 
         msgList = findViewById(R.id.msg_list);
         msgInput = findViewById(R.id.msg_input);
-        adapter = new MessageAdapter(this, settings.getClientId());
+        adapter = new MessageAdapter(this, settings.getNickname());
         msgList.setAdapter(adapter);
 
         findViewById(R.id.btn_chat_settings).setOnClickListener(v ->
@@ -60,6 +61,17 @@ public class ChatActivity extends Activity {
         }
         String content = msgInput.getText().toString().trim();
         if (content.isEmpty()) return;
+        long now = System.currentTimeMillis();
+        if (now - lastSendTime < 2000) {
+            Toast.makeText(this, "发送太频繁，请稍候", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String bad = BadWordFilter.check(content);
+        if (bad != null) {
+            Toast.makeText(this, "消息含违规内容，已拦截", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        lastSendTime = now;
         msgInput.setText("");
         ChatClient.send(settings.getBackendUrl(), settings.getMode(), nick, content,
                 settings.getClientId(), settings.getSupabaseKey(),
@@ -99,7 +111,7 @@ public class ChatActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter = new MessageAdapter(this, settings.getClientId());
+        adapter = new MessageAdapter(this, settings.getNickname());
         msgList.setAdapter(adapter);
         polling = true;
         fetchMessages();
