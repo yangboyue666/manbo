@@ -25,4 +25,9 @@
     <string name="loading">加载中…</string>
     <string name="nickname_prompt">请先在设置页填写昵称</string>
     <string name="desktop_mode">伪装电脑版</string>
+    <string name="home_slogan">轻快 · 干净 · 无广告</string>
+    <string name="download">下载</string>
+    <string name="password_vault">密码库</string>
+    <string name="private_mode">隐私</string>
+    <string name="home_title">首页标题</string>
 </resources>
