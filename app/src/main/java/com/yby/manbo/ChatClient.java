@@ -18,7 +18,8 @@ public class ChatClient {
         public String nickname;
         public String content;
         public String time;
-        public Message(String n, String c, String t) { nickname = n; content = c; time = t; }
+        public String clientId;
+        public Message(String n, String c, String t, String cid) { nickname = n; content = c; time = t; clientId = cid; }
     }
 
     public interface Callback<T> {
@@ -94,7 +95,8 @@ public class ChatClient {
             list.add(new Message(
                     o.optString("nickname", "?"),
                     o.optString("content", ""),
-                    o.optString("create_time", o.optString("time", ""))));
+                    o.optString("create_time", o.optString("time", "")),
+                    o.optString("client_id", "")));
         }
         return list;
     }
@@ -126,8 +128,8 @@ public class ChatClient {
 
     private static List<Message> fetchSupabase(String baseUrl, String apiKey) throws IOException, JSONException {
         String url = baseUrl.endsWith("/")
-                ? baseUrl + "rest/v1/messages?select=nickname,content,create_time&order=create_time.asc&limit=100"
-                : baseUrl + "/rest/v1/messages?select=nickname,content,create_time&order=create_time.asc&limit=100";
+                ? baseUrl + "rest/v1/messages?select=nickname,content,create_time,client_id&order=create_time.asc&limit=100"
+                : baseUrl + "/rest/v1/messages?select=nickname,content,create_time,client_id&order=create_time.asc&limit=100";
         HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
         conn.setRequestMethod("GET");
         conn.setConnectTimeout(8000);
@@ -147,7 +149,8 @@ public class ChatClient {
             list.add(new Message(
                     o.optString("nickname", "?"),
                     o.optString("content", ""),
-                    o.optString("create_time", "")));
+                    o.optString("create_time", ""),
+                    o.optString("client_id", "")));
         }
         return list;
     }
