@@ -59,6 +59,6 @@ public class SettingsStore {
     public boolean isDesktopMode() { return sp.getBoolean(KEY_DESKTOP, false); }
     public void setDesktopMode(boolean d) { sp.edit().putBoolean(KEY_DESKTOP, d).apply(); }
 
-    public String getHomeTitle() { return sp.getString(KEY_HOME_TITLE, "曼波"); }
+    public String getHomeTitle() { return sp.getString(KEY_HOME_TITLE, "manbo"); }
     public void setHomeTitle(String t) { sp.edit().putString(KEY_HOME_TITLE, t).apply(); }
 }
