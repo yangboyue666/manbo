@@ -158,14 +158,6 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.04" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/home_slogan"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp"
-                android:layout_marginTop="6dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
