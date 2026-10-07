@@ -30,7 +30,7 @@ public class ChatActivity extends Activity {
 
         msgList = findViewById(R.id.msg_list);
         msgInput = findViewById(R.id.msg_input);
-        adapter = new MessageAdapter(this, settings.getNickname());
+        adapter = new MessageAdapter(this, settings.getClientId());
         msgList.setAdapter(adapter);
 
         findViewById(R.id.btn_chat_settings).setOnClickListener(v ->
@@ -99,7 +99,7 @@ public class ChatActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter = new MessageAdapter(this, settings.getNickname());
+        adapter = new MessageAdapter(this, settings.getClientId());
         msgList.setAdapter(adapter);
         polling = true;
         fetchMessages();
