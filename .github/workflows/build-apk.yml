@@ -20,7 +20,15 @@ jobs:
         with:
           gradle-version: '8.9'
 
+      - name: Decode keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > /tmp/manbo.keystore
+
       - name: Build debug APK
+        env:
+          KEYSTORE_PATH: /tmp/manbo.keystore
+          KEYSTORE_PASS: manbo2026
+          KEY_ALIAS: manbo
+          KEY_PASS: manbo2026
         run: gradle assembleDebug --no-daemon
 
       - name: Upload APK artifact
