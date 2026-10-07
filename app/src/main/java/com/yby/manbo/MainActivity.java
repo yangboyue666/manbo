@@ -1,13 +1,18 @@
 package com.yby.manbo;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
@@ -28,6 +33,10 @@ public class MainActivity extends Activity {
     private ProgressBar progress;
     private SettingsStore settings;
     private AdBlockEngine adBlock;
+    private View homeView;
+    private View addressBar;
+    private View toolbar;
+    private EditText homeSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,26 +48,72 @@ public class MainActivity extends Activity {
         urlBar = findViewById(R.id.url_bar);
         progress = findViewById(R.id.progress);
         webView = findViewById(R.id.webview);
+        homeView = findViewById(R.id.home_view);
+        addressBar = findViewById(R.id.address_bar);
+        toolbar = findViewById(R.id.toolbar);
+        homeSearch = findViewById(R.id.home_search);
+
+        ((android.widget.TextView) findViewById(R.id.home_logo)).setText(settings.getHomeTitle());
 
         setupWebView();
+        setupHome();
 
         urlBar.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_GO) { go(); return true; }
+            if (actionId == EditorInfo.IME_ACTION_GO) { loadInput(urlBar.getText().toString()); return true; }
             return false;
         });
 
         findViewById(R.id.btn_back).setOnClickListener(v -> { if (webView.canGoBack()) webView.goBack(); });
         findViewById(R.id.btn_forward).setOnClickListener(v -> { if (webView.canGoForward()) webView.goForward(); });
         findViewById(R.id.btn_refresh).setOnClickListener(v -> webView.reload());
-        findViewById(R.id.btn_home).setOnClickListener(v -> webView.loadUrl(settings.getHomeUrl()));
+        findViewById(R.id.btn_home).setOnClickListener(v -> showHome());
         findViewById(R.id.btn_star).setOnClickListener(v -> addBookmark());
         findViewById(R.id.btn_menu).setOnClickListener(v -> showMenu());
 
         applyAddressBarPosition();
 
         String intentUrl = getIntent().getDataString();
-        if (intentUrl != null) webView.loadUrl(intentUrl);
-        else webView.loadUrl(settings.getHomeUrl());
+        if (intentUrl != null) { showBrowser(); webView.loadUrl(intentUrl); }
+        else showHome();
+    }
+
+    private void setupHome() {
+        homeSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_GO) { loadInput(homeSearch.getText().toString()); return true; }
+            return false;
+        });
+        findViewById(R.id.home_book).setOnClickListener(v -> startActivity(new Intent(this, BookmarkActivity.class)));
+        findViewById(R.id.home_chat).setOnClickListener(v -> startActivity(new Intent(this, ChatActivity.class)));
+        findViewById(R.id.home_download).setOnClickListener(v -> startActivity(new Intent(this, DownloadHistoryActivity.class)));
+        findViewById(R.id.home_password).setOnClickListener(v -> startActivity(new Intent(this, PasswordActivity.class)));
+        findViewById(R.id.home_private).setOnClickListener(v -> openPrivate());
+        findViewById(R.id.home_settings).setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
+    }
+
+    private void showHome() {
+        homeView.setVisibility(View.VISIBLE);
+        addressBar.setVisibility(View.GONE);
+        toolbar.setVisibility(View.GONE);
+        progress.setVisibility(View.GONE);
+        webView.setVisibility(View.GONE);
+    }
+
+    private void showBrowser() {
+        homeView.setVisibility(View.GONE);
+        addressBar.setVisibility(View.VISIBLE);
+        toolbar.setVisibility(View.VISIBLE);
+        webView.setVisibility(View.VISIBLE);
+    }
+
+    private void loadInput(String input) {
+        input = input.trim();
+        if (input.isEmpty()) return;
+        String url;
+        if (input.contains("://")) url = input;
+        else if (input.contains(".") && !input.contains(" ")) url = "https://" + input;
+        else url = "https://www.bing.com/search?q=" + Uri.encode(input);
+        showBrowser();
+        webView.loadUrl(url);
     }
 
     private void applyAddressBarPosition() {
@@ -157,32 +212,27 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void go() {
-        String input = urlBar.getText().toString().trim();
-        if (input.isEmpty()) return;
-        String url;
-        if (input.contains("://")) url = input;
-        else if (input.contains(".") && !input.contains(" ")) url = "https://" + input;
-        else url = "https://www.bing.com/search?q=" + Uri.encode(input);
-        webView.loadUrl(url);
-    }
-
     private void showMenu() {
-        String desktopLabel = settings.isDesktopMode() ? "伪装电脑版 (已开启)" : "伪装电脑版";
-        String[] items = {"书签", "聊天", "隐私窗口", "下载历史", "密码库", desktopLabel, "设置", "添加当前页为书签"};
-        new AlertDialog.Builder(this)
-            .setItems(items, (d, which) -> {
-                switch (which) {
-                    case 0: startActivity(new Intent(this, BookmarkActivity.class)); break;
-                    case 1: startActivity(new Intent(this, ChatActivity.class)); break;
-                    case 2: openPrivate(); break;
-                    case 3: startActivity(new Intent(this, DownloadHistoryActivity.class)); break;
-                    case 4: startActivity(new Intent(this, PasswordActivity.class)); break;
-                    case 5: toggleDesktopMode(); break;
-                    case 6: startActivity(new Intent(this, SettingsActivity.class)); break;
-                    case 7: addBookmark(); break;
-                }
-            }).show();
+        final Dialog d = new Dialog(this);
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        d.setContentView(R.layout.dialog_menu);
+        Window w = d.getWindow();
+        if (w != null) {
+            w.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            w.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            w.setGravity(Gravity.BOTTOM);
+        }
+        android.widget.TextView deskLabel = d.findViewById(R.id.menu_desktop_label);
+        deskLabel.setText(settings.isDesktopMode() ? "电脑版已开" : "电脑版");
+        d.findViewById(R.id.menu_bookmark).setOnClickListener(v -> { d.dismiss(); startActivity(new Intent(this, BookmarkActivity.class)); });
+        d.findViewById(R.id.menu_chat).setOnClickListener(v -> { d.dismiss(); startActivity(new Intent(this, ChatActivity.class)); });
+        d.findViewById(R.id.menu_download).setOnClickListener(v -> { d.dismiss(); startActivity(new Intent(this, DownloadHistoryActivity.class)); });
+        d.findViewById(R.id.menu_password).setOnClickListener(v -> { d.dismiss(); startActivity(new Intent(this, PasswordActivity.class)); });
+        d.findViewById(R.id.menu_private).setOnClickListener(v -> { d.dismiss(); openPrivate(); });
+        d.findViewById(R.id.menu_addbookmark).setOnClickListener(v -> { d.dismiss(); addBookmark(); });
+        d.findViewById(R.id.menu_desktop).setOnClickListener(v -> { d.dismiss(); toggleDesktopMode(); });
+        d.findViewById(R.id.menu_settings).setOnClickListener(v -> { d.dismiss(); startActivity(new Intent(this, SettingsActivity.class)); });
+        d.show();
     }
 
     private void openPrivate() {
@@ -203,8 +253,9 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()) webView.goBack();
-        else super.onBackPressed();
+        if (homeView.getVisibility() == View.VISIBLE) super.onBackPressed();
+        else if (webView.canGoBack()) webView.goBack();
+        else showHome();
     }
 
     @Override
@@ -217,5 +268,6 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         webView.onResume();
+        ((android.widget.TextView) findViewById(R.id.home_logo)).setText(settings.getHomeTitle());
     }
 }
