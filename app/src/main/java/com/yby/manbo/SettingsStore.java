@@ -20,16 +20,16 @@ public class SettingsStore {
         sp = ctx.getApplicationContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
 
-    public String getBackendUrl() { return sp.getString(KEY_BACKEND_URL, ""); }
+    public String getBackendUrl() { return sp.getString(KEY_BACKEND_URL, "https://nrsazdivhncogdvezzwi.supabase.co"); }
     public void setBackendUrl(String url) { sp.edit().putString(KEY_BACKEND_URL, url).apply(); }
 
     public String getNickname() { return sp.getString(KEY_NICKNAME, ""); }
     public void setNickname(String n) { sp.edit().putString(KEY_NICKNAME, n).apply(); }
 
-    public int getMode() { return sp.getInt(KEY_MODE, 0); }
+    public int getMode() { return sp.getInt(KEY_MODE, 1); }
     public void setMode(int m) { sp.edit().putInt(KEY_MODE, m).apply(); }
 
-    public String getSupabaseKey() { return sp.getString(KEY_SUPA_KEY, ""); }
+    public String getSupabaseKey() { return sp.getString(KEY_SUPA_KEY, "sb_publishable_qXVeFhCPmBHpDc9EdFvMqw_3JwJlakj"); }
     public void setSupabaseKey(String k) { sp.edit().putString(KEY_SUPA_KEY, k).apply(); }
 
     public String getClientId() {
