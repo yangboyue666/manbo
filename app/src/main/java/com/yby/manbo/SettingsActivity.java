@@ -18,7 +18,6 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.activity_settings);
         settings = new SettingsStore(this);
 
-        RadioGroup modeGroup = findViewById(R.id.mode_group);
         EditText urlEt = findViewById(R.id.edit_backend_url);
         EditText nickEt = findViewById(R.id.edit_nickname);
         EditText homeTitleEt = findViewById(R.id.edit_home_title);
@@ -29,8 +28,6 @@ public class SettingsActivity extends Activity {
         urlEt.setText(settings.getBackendUrl());
         nickEt.setText(settings.getNickname());
         homeTitleEt.setText(settings.getHomeTitle());
-        if (settings.getMode() == 1) modeGroup.check(R.id.mode_supabase);
-        else modeGroup.check(R.id.mode_php);
         adBlockCb.setChecked(settings.isAdBlockEnabled());
         desktopCb.setChecked(settings.isDesktopMode());
         if (settings.isAddressBarBottom()) addrGroup.check(R.id.addr_bottom);
@@ -42,11 +39,10 @@ public class SettingsActivity extends Activity {
             String nick = nickEt.getText().toString().trim();
             String homeTitle = homeTitleEt.getText().toString().trim();
             if (homeTitle.isEmpty()) homeTitle = "曼波";
-            int mode = modeGroup.getCheckedRadioButtonId() == R.id.mode_supabase ? 1 : 0;
             settings.setBackendUrl(url);
             settings.setNickname(nick);
             settings.setHomeTitle(homeTitle);
-            settings.setMode(mode);
+            settings.setMode(1);
             settings.setAdBlockEnabled(adBlockCb.isChecked());
             settings.setDesktopMode(desktopCb.isChecked());
             settings.setAddressBarBottom(addrGroup.getCheckedRadioButtonId() == R.id.addr_bottom);
