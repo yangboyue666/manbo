@@ -37,15 +37,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chat_mode"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="8dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,27 +44,6 @@
                 android:background="@drawable/bg_card"
                 android:padding="16dp"
                 android:layout_marginBottom="20dp">
-
-                <RadioGroup
-                    android:id="@+id/mode_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <RadioButton
-                        android:id="@+id/mode_php"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="PHP 轮询 (send.php/get.php)"
-                        android:checked="true" />
-
-                    <RadioButton
-                        android:id="@+id/mode_supabase"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Supabase REST" />
-                </RadioGroup>
 
                 <EditText
                     android:id="@+id/edit_backend_url"
